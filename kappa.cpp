@@ -269,8 +269,8 @@ void free_memory(void)
 int main(int argc, char *argv[])
 {
     read_para();
-    find_para();
     echo_para();
+    find_para();
     allocate_memory();
     read_phi();
     read_r();
