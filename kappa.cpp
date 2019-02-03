@@ -18,10 +18,12 @@ double *hac_x, *hac_y, *hac_z, *rtc_x, *rtc_y, *rtc_z;
 void apply_mic(double x12[3])
 {
     for (int d = 0; d < 3; d++)
-    if (pbc[d] == 1)
     {
-        if (x12[d] < - box2[d]) {x12[d] += box[d];} 
-        else if (x12[d] > box2[d]) {x12[d] -= box[d];}
+        if (pbc[d] == 1)
+        {
+            if (x12[d] < - box2[d]) {x12[d] += box[d];} 
+            else if (x12[d] > box2[d]) {x12[d] -= box[d];}
+        }
     }
 }
 
@@ -47,9 +49,9 @@ void find_heat_current
             v2[1] = vy[n2];
             v2[2] = vz[n2];
             double r12[3];
-            r12[0]=x0[n2]-x0[n1];
-            r12[1]=y0[n2]-y0[n1];
-            r12[2]=z0[n2]-z0[n1];
+            r12[0] = x0[n2] - x0[n1];
+            r12[1] = y0[n2] - y0[n1];
+            r12[2] = z0[n2] - z0[n1];
             apply_mic(r12);
             double phi_u_v = 0.0;
             for (int a = 0; a < 3; a++)
@@ -101,7 +103,7 @@ void find_hac(void)
 
 void find_kappa(void)
 {
-    double factor = dt * 0.5 *  KAPPA_UNIT_CONVERSION / (K_B * T * T * V);
+    double factor = dt * 0.5 * KAPPA_UNIT_CONVERSION / (K_B * T * T * V);
     for (int nc = 0; nc < Nc; nc++) {rtc_x[nc] = rtc_y[nc] = rtc_z[nc] = 0.0;}
     for (int nc = 1; nc < Nc; nc++)
     {
