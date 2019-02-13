@@ -8,7 +8,6 @@
 #define KAPPA_UNIT_CONVERSION    1.573769e+5 // W/(mK) <-> my natural unit
 
 
-char input_dir[256];
 int N, Nt, Nd, Nc, pbc[3];
 double T, dt, dt_in_ps, dt2, V, box[3], box2[3];
 double *phi, *x, *y, *z, *vx, *vy, *vz, *hx, *hy, *hz;
@@ -145,10 +144,7 @@ void read_phi(void)
 
 void read_r(void)
 {
-    char file_r[256];
-    strcpy(file_r, input_dir);
-    strcat(file_r, "/xf.txt");
-    FILE* fid_r = fopen(file_r, "r");
+    FILE* fid_r = fopen("xf.txt", "r");
     for (int step = 0; step < Nt; ++step)
     {
         int offset = step * N;
@@ -196,9 +192,7 @@ void find_v(void)
 void read_para(void)
 {
     FILE *fid_para = fopen("para.txt", "r");
-    int count = fscanf(fid_para, "%s", input_dir);
-    if (count != 1) { printf("Reding error for para.in.\n"); exit(1); }
-    count = fscanf(fid_para, "%d%d%d%d", &N, &Nt, &Nd, &Nc);
+    int count = fscanf(fid_para, "%d%d%d%d", &N, &Nt, &Nd, &Nc);
     if (count != 4) { printf("Reding error for para.in.\n"); exit(1); }
     count = fscanf(fid_para, "%d%d%d", &pbc[0], &pbc[1], &pbc[2]);
     if (count != 3) { printf("Reding error for para.in.\n"); exit(1); }
@@ -222,7 +216,6 @@ void find_para(void)
 
 void echo_para()
 {
-    printf("input_dir = %s\n", input_dir);
     printf("N = %d\n", N);
     printf("Nt = %d\n", Nt);
     printf("Nd = %d\n", Nd);
